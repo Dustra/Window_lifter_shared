@@ -241,7 +241,6 @@ void Func_500us(void)
 
 	char array[10];
 	array[11]='a';
-
 	
 	switch(rub_state)
 	{
