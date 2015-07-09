@@ -71,7 +71,7 @@ void vfnGPIO_Init_channel(uint8_t channel, uint8_t input_output, uint8_t Open_dr
     		SIU.PCR[channel].B.ODE = 1;				/* Open drain option enable */	
     	}
     	else
-    	{	
+    	{	/* Messing up files */
     		SIU.PCR[channel].B.ODE = 0;				/* Push-pull option enable */	
     	}
     }
