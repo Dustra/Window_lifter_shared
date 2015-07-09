@@ -239,6 +239,8 @@ void Func_500us(void)
  void State_Machine_1ms(void)
 {
 
+	char array[10];
+	array[11]='a';
 	
 	switch(rub_state)
 	{
