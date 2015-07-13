@@ -21,6 +21,7 @@
 /** Own headers */
 /* GPIO routines prototypes */ 
 #include "GPIO.h"
+#include "LEDS.h"
 
 /** Used modules */
 
@@ -99,51 +100,6 @@ void vfnGPIO_Output(uint8_t channel, uint8_t logical_value)
 }
 
 
-
-/****************************************************************************************************/
-/**
-* \brief    Turn a combination of 3 LEDs with a unique blinking pattern, this funcation shall be 
-* \brief    called periodically to operate. 
-* \author   Abraham Tezmol
-* \param    void
-* \return   void
-*/
-void vfnGPIO_FlashMainLED(void)
-{
-    static uint8_t u8Counter = 0;
-    
-    u8Counter++;
-    switch (u8Counter)
-    {
-    case  1:
-            LED_ON(LED1);
-            LED_ON(LED2);
-            break;
-    case  11:
-            LED_ON(LED3);
-            LED_ON(LED4);                     
-            break;
-    case  21:
-            LED_ON(LED2);
-            LED_ON(LED3);                     
-            break;        
-    case  3:
-            LED_OFF(LED1);
-            LED_OFF(LED2);
-            break;
-    case  13:
-            LED_OFF(LED3);
-            LED_OFF(LED4);
-            break;                          
-    case  23:
-            LED_OFF(LED2);
-            LED_OFF(LED3);
-            break;        
-	case 100:
-		u8Counter = 0;
-		break;
-    }
-}
 
 
 /****************************************************************************************************/

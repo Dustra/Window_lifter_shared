@@ -22,25 +22,15 @@
 /* Integration under Continuus CM                                             */
 /*============================================================================*/
 
-#ifndef _SchM_CFG_H_
-#define _SchM_CFG_H_
 
-
+#ifndef _LEDS_H        /*prevent duplicated includes*/
+#define _LEDS_H
 
 /* Includes */
 /* -------- */
 
-#include "SchM.h"
-
-
-/*Exported types and constants*/
-/*----------------------------*/
-
-/*Types definition*/
-/*typedefs*/
-
-
-
+#include "typedefs.h"
+#include "APP.h"
 
 
 /*==================================================*/ 
@@ -53,8 +43,6 @@
 
 
 /* LONG and STRUCTURE constants */
-
-extern const SchConfigType SchConfig;
 
 
 
@@ -70,9 +58,6 @@ extern const SchConfigType SchConfig;
 /* LONGS and STRUCTURES */
 
 
-
-
-
 /*======================================================*/ 
 /* close variable declaration sections                  */
 /*======================================================*/ 
@@ -81,8 +66,34 @@ extern const SchConfigType SchConfig;
 /* ---------------------------------------- */
 
 
+
 /* Functions prototypes */
 
+extern void Out_Leds(void);
+
+/*defines*/
+
+#define LED1      					68
+#define LED2       					69
+#define LED3       					70
+#define LED4        				71
+
+#define RA0							0						
+#define RA1							1					
+#define RA2							2				
+#define RA3							3
+#define RA4							4				
+#define RA5							5				
+#define RA6							6		
+#define RA7							7					
+#define RA8							8				
+#define RA9							9					
+#define RA10						10					
+#define RA11						11					
+#define RA12						12						
+#define RA13						13
+#define RA14						14
+#define RA15						15
 
 
 /* Functions macros */
@@ -94,4 +105,6 @@ extern const SchConfigType SchConfig;
 
 
 
-#endif
+
+#endif 
+
