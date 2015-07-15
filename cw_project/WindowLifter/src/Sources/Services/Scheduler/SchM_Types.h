@@ -97,8 +97,9 @@ typedef struct
 typedef struct 
 {
 	
-	T_UBYTE SchNumberofTasks;
-	const SchTaskDescriptorType *SchTaskDescriptor;
+	T_UBYTE 						SchNumberofTasks;
+	const SchTaskDescriptorType 	*SchTaskDescriptorPtr;
+
 }SchConfigType;
 
 typedef enum

@@ -118,9 +118,7 @@ enum N_STATES
 #define 	ON_LED_DOWN		LED_ON(RA15)
 #define 	OFF_LED_DOWN	LED_OFF(RA15)
 
-#define 	ANTIPINCH		INPUT(PUSH3)
-#define		UP_PUSH			INPUT(PUSH1)
-#define		DOWN_PUSH		INPUT(PUSH2)
+
 
 
 

@@ -3,7 +3,7 @@
 /*============================================================================*/
 /*                        OBJECT SPECIFICATION                                */
 /*============================================================================*
-* C Include:        APP.h
+* C Include:        LEDS.h
 * Instance:         RPL_1
 * %version:         1 %
 * %created_by:      uid02495 %
@@ -11,7 +11,7 @@
 *=============================================================================*/
 /* DESCRIPTION : Header file template                                         */
 /*============================================================================*/
-/* FUNCTION COMMENT : Contains header for APP.C function              		  */
+/* FUNCTION COMMENT : Header for LEDS MODULE			            		  */
 /*                                                                            */
 /*============================================================================*/
 /*                               OBJECT HISTORY                               */
@@ -73,11 +73,28 @@ extern void Out_Leds(void);
 
 /*defines*/
 
-#define LED1      					68
-#define LED2       					69
-#define LED3       					70
-#define LED4        				71
 
+enum PORTA
+{
+	 RA0=0,													
+	 RA1,												
+	 RA2,											
+	 RA3,							
+	 RA4,											
+	 RA5,											
+	 RA6,									
+	 RA7,												
+	 RA8,											
+	 RA9,												
+	 RA10,											
+	 RA11,											
+	 RA12,												
+	 RA13,						
+	 RA14,						
+	 RA15							
+};
+
+/*
 #define RA0							0						
 #define RA1							1					
 #define RA2							2				
@@ -94,7 +111,7 @@ extern void Out_Leds(void);
 #define RA13						13
 #define RA14						14
 #define RA15						15
-
+*/
 
 /* Functions macros */
 

@@ -32,6 +32,10 @@
 #include    "APP.h"
 #include	"STM.h"
 #include 	"LEDS.h"
+#include 	"Switches.h"
+#include 	"SchM.h"
+#include 	"MemAlloc_Cfg.h"
+
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
@@ -125,18 +129,28 @@ void disableWatchdog(void)
 int main(void) 
 
 {
-
+	/*Initiate Run Mode at 64K*/
 	initModesAndClock();
+	/*Disable Watchdog in private function*/
 	disableWatchdog();
+	/*Config of Malloc Module*/
+	MemAllocInit(&MemAllocConfig);
+	/*Init of internal HW LEDS*/
 	vfnGPIO_LED_Init();	
+	/*Init of external HW LEDS*/
+	LED_Init();
+	/*Init of Push*/
+	PUSH_Init();
+	/*INT interruptions*/
 	INTC_InitINTCInterrupts();
+	/*STM TIMER Module Configuration*/
 	Timer_Config();
+	/*Init Except Handler*/
 	EXCEP_InitExceptionHandlers();
-	PIT_device_init();
-    PIT_channel_configure(PIT_CHANNEL_0 , Func_500us);	
-    PIT_channel_start(PIT_CHANNEL_0);
-    enableIrq();
-
+	/*Config of Scheduler*/
+	SchM_Init(&SchConfig);
+	/*Start Scheduler and loop in Background Function*/
+	SchM_Start();
     
     while(1)
     {

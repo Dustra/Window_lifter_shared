@@ -69,7 +69,7 @@
 /* Private functions prototypes */
 /* ---------------------------- */
 
-
+ void Out_Leds(void);
 
 
 /* Exported functions prototypes */
@@ -93,6 +93,52 @@
 
 
 /**************************************************************
+ *  Name                 : LED_Init
+ *  Description          :	Translate the value in variable rub_level to digital outputs
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :
+ *  Critical/explanation :    [No]
+ **************************************************************/
+ void LED_Init(void)
+ {
+ 	
+ 	vfnGPIO_Init_channel(RA0,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA0-> as output*/
+	vfnGPIO_Output (RA0, 0);
+	vfnGPIO_Init_channel(RA1,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA1-> as output*/
+	vfnGPIO_Output (RA1, 0);
+	vfnGPIO_Init_channel(RA2,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA2-> as output*/
+	vfnGPIO_Output (RA2, 0);
+	vfnGPIO_Init_channel(RA3,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA3-> as output*/
+	vfnGPIO_Output (RA3, 0);
+	vfnGPIO_Init_channel(RA4,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA4-> as output*/
+	vfnGPIO_Output (RA4, 0);
+	vfnGPIO_Init_channel(RA5,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA5-> as output*/
+	vfnGPIO_Output (RA5, 0);
+	vfnGPIO_Init_channel(RA6,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA6-> as output*/
+	vfnGPIO_Output (RA6, 0);
+	vfnGPIO_Init_channel(RA7,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA7-> as output*/
+	vfnGPIO_Output (RA7, 0);
+	vfnGPIO_Init_channel(RA8,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA8-> as output*/
+	vfnGPIO_Output (RA8, 0);
+	vfnGPIO_Init_channel(RA9,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA9-> as output*/
+	vfnGPIO_Output (RA9, 0);
+	vfnGPIO_Init_channel(RA10,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA10-> as output*/
+	vfnGPIO_Output (RA10, 0);
+	vfnGPIO_Init_channel(RA11,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA11-> as output*/
+	vfnGPIO_Output (RA11, 0);
+	vfnGPIO_Init_channel(RA12,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA12-> as output*/
+	vfnGPIO_Output (RA12, 0);
+	vfnGPIO_Init_channel(RA13,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA13-> as output*/
+	vfnGPIO_Output (RA13, 0);
+	vfnGPIO_Init_channel(RA14,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA14-> as output*/
+	vfnGPIO_Output (RA14, 0);
+	vfnGPIO_Init_channel(RA15,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA15-> as output*/
+	vfnGPIO_Output (RA15, 0);
+ 
+
+}
+ 
+ /**************************************************************
  *  Name                 : Out_Leds
  *  Description          :	Translate the value in variable rub_level to digital outputs
  *  Parameters           :  [Input, Output, Input / output]

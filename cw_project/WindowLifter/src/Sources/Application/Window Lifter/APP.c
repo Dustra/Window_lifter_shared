@@ -31,6 +31,7 @@
 #include "GPIO.h"
 #include "STM.h"
 #include "LEDS.h"
+#include "Switches.h"
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
