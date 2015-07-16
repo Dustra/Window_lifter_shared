@@ -21,6 +21,7 @@
 /** Own headers */
 /* GPIO routines prototypes */ 
 #include "GPIO.h"
+#include "LEDS.h"
 
 /** Used modules */
 
@@ -100,51 +101,6 @@ void vfnGPIO_Output(uint8_t channel, uint8_t logical_value)
 
 
 
-/****************************************************************************************************/
-/**
-* \brief    Turn a combination of 3 LEDs with a unique blinking pattern, this funcation shall be 
-* \brief    called periodically to operate. 
-* \author   Abraham Tezmol
-* \param    void
-* \return   void
-*/
-void vfnGPIO_FlashMainLED(void)
-{
-    static uint8_t u8Counter = 0;
-    
-    u8Counter++;
-    switch (u8Counter)
-    {
-    case  1:
-            LED_ON(LED1);
-            LED_ON(LED2);
-            break;
-    case  11:
-            LED_ON(LED3);
-            LED_ON(LED4);                     
-            break;
-    case  21:
-            LED_ON(LED2);
-            LED_ON(LED3);                     
-            break;        
-    case  3:
-            LED_OFF(LED1);
-            LED_OFF(LED2);
-            break;
-    case  13:
-            LED_OFF(LED3);
-            LED_OFF(LED4);
-            break;                          
-    case  23:
-            LED_OFF(LED2);
-            LED_OFF(LED3);
-            break;        
-	case 100:
-		u8Counter = 0;
-		break;
-    }
-}
-
 
 /****************************************************************************************************/
 /**
@@ -165,43 +121,7 @@ void vfnGPIO_LED_Init(void)
 	vfnGPIO_Init_channel(LED4,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /* PE7 --> LED4*/
 	vfnGPIO_Output (LED4, 1);
 	
-	vfnGPIO_Init_channel(PUSH1,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE4 --> PUSH1*/
-	vfnGPIO_Init_channel(PUSH2,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE5 --> PUSH2*/
-	vfnGPIO_Init_channel(PUSH3,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE6 --> PUSH3*/
-	vfnGPIO_Init_channel(PUSH4,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE7 --> PUSH4*/
 	
-	vfnGPIO_Init_channel(RA0,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA0-> as output*/
-	vfnGPIO_Output (RA0, 0);
-	vfnGPIO_Init_channel(RA1,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA1-> as output*/
-	vfnGPIO_Output (RA1, 0);
-	vfnGPIO_Init_channel(RA2,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA2-> as output*/
-	vfnGPIO_Output (RA2, 0);
-	vfnGPIO_Init_channel(RA3,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA3-> as output*/
-	vfnGPIO_Output (RA3, 0);
-	vfnGPIO_Init_channel(RA4,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA4-> as output*/
-	vfnGPIO_Output (RA4, 0);
-	vfnGPIO_Init_channel(RA5,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA5-> as output*/
-	vfnGPIO_Output (RA5, 0);
-	vfnGPIO_Init_channel(RA6,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA6-> as output*/
-	vfnGPIO_Output (RA6, 0);
-	vfnGPIO_Init_channel(RA7,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA7-> as output*/
-	vfnGPIO_Output (RA7, 0);
-	vfnGPIO_Init_channel(RA8,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA8-> as output*/
-	vfnGPIO_Output (RA8, 0);
-	vfnGPIO_Init_channel(RA9,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA9-> as output*/
-	vfnGPIO_Output (RA9, 0);
-	vfnGPIO_Init_channel(RA10,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA10-> as output*/
-	vfnGPIO_Output (RA10, 0);
-	vfnGPIO_Init_channel(RA11,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA11-> as output*/
-	vfnGPIO_Output (RA11, 0);
-	vfnGPIO_Init_channel(RA12,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA12-> as output*/
-	vfnGPIO_Output (RA12, 0);
-	vfnGPIO_Init_channel(RA13,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA13-> as output*/
-	vfnGPIO_Output (RA13, 0);
-	vfnGPIO_Init_channel(RA14,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA14-> as output*/
-	vfnGPIO_Output (RA14, 0);
-	vfnGPIO_Init_channel(RA15,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA15-> as output*/
-	vfnGPIO_Output (RA15, 0);
 	
 	
 	

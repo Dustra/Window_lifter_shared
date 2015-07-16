@@ -31,30 +31,6 @@
 #define LED3       					70
 #define LED4        				71
 
-#define PUSH1						64
-#define PUSH2						65
-#define PUSH3						66
-#define PUSH4						67
-
-
-#define RA0							0						
-#define RA1							1					
-#define RA2							2				
-#define RA3							3
-#define RA4							4				
-#define RA5							5				
-#define RA6							6		
-#define RA7							7					
-#define RA8							8				
-#define RA9							9					
-#define RA10						10					
-#define RA11						11					
-#define RA12						12						
-#define RA13						13
-#define RA14						14
-#define RA15						15		
- 
-
 #define GPIO_INPUT					0
 #define GPIO_OUTPUT					1
 
@@ -78,16 +54,14 @@
 /** Toggle LED */ 
 #define LED_TOGGLE(channel)                 (SIU.GPDO[channel].B.PDO ^= 1) 
 
-
-#define INPUT(channel)					SIU.GPDI[channel].B.PDI
+#define INPUT(channel)						SIU.GPDI[channel].B.PDI
 
 
 /*-- Function Prototypes -----------------------------------------------------*/
 
-void vfnGPIO_Init_channel(uint8_t channel, uint8_t input_output, uint8_t Open_drain);
-void vfnGPIO_Output(uint8_t channel, uint8_t logical_value);
-void vfnGPIO_FlashMainLED(void);
-void vfnGPIO_LED_Init(void);
+extern void vfnGPIO_Init_channel(uint8_t channel, uint8_t input_output, uint8_t Open_drain);
+extern void vfnGPIO_Output(uint8_t channel, uint8_t logical_value);
+extern void vfnGPIO_LED_Init(void);
 
 
 #endif /* _GPIO_H */
