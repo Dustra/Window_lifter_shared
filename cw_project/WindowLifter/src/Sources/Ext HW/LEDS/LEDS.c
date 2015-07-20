@@ -69,7 +69,7 @@
 /* Private functions prototypes */
 /* ---------------------------- */
 
- void Out_Leds(void);
+ //void Out_Leds(T_UBYTE* lub_level_ptr);
 
 
 /* Exported functions prototypes */
@@ -146,17 +146,17 @@
  *  Critical/explanation :    [No]
  **************************************************************/
  
- void Out_Leds(void)
+ void Out_Leds(T_UBYTE* lub_level_ptr)
 {
 	
-	if(rub_level<LEVEL_MIN)
+	if(*lub_level_ptr<LEVEL_MIN)
 	{
-		rub_level=LEVEL_MIN;
+		*lub_level_ptr=LEVEL_MIN;
 	}
 	
-	if(rub_level>LEVEL_MAX)
+	if(*lub_level_ptr>LEVEL_MAX)
 	{
-		rub_level=LEVEL_MAX;
+		*lub_level_ptr=LEVEL_MAX;
 	}
 	
 	LED_OFF(RA0);
@@ -171,44 +171,44 @@
 	LED_OFF(RA9);
 	
 	
-	if(rub_level>LEVEL_MIN)
+	if(*lub_level_ptr>LEVEL_MIN)
 	{
 		LED_ON(RA0);
 	}
 
-	if(rub_level>LEVEL1)
+	if(*lub_level_ptr>LEVEL1)
 	{
 		LED_ON(RA1);
 	}
-	if(rub_level>LEVEL2)
+	if(*lub_level_ptr>LEVEL2)
 	{
 		LED_ON(RA2);
 	}
-	if(rub_level>LEVEL3)
+	if(*lub_level_ptr>LEVEL3)
 	{
 		LED_ON(RA3);
 	}
-	if(rub_level>LEVEL4)
+	if(*lub_level_ptr>LEVEL4)
 	{
 		LED_ON(RA4);
 	}
-	if(rub_level>LEVEL5)
+	if(*lub_level_ptr>LEVEL5)
 	{
 		LED_ON(RA5);
 	}
-	if(rub_level>LEVEL6)
+	if(*lub_level_ptr>LEVEL6)
 	{
 		LED_ON(RA6);
 	}
-	if(rub_level>LEVEL7)
+	if(*lub_level_ptr>LEVEL7)
 	{
 		LED_ON(RA7);
 	}
-	if(rub_level>LEVEL8)
+	if(*lub_level_ptr>LEVEL8)
 	{
 		LED_ON(RA8);
 	}
-	if(rub_level>LEVEL9)
+	if(*lub_level_ptr>LEVEL9)
 	{
 		LED_ON(RA9);
 	}

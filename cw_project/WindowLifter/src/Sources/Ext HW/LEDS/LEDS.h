@@ -69,7 +69,7 @@
 
 /* Functions prototypes */
 
-extern void Out_Leds(void);
+extern void Out_Leds(T_UBYTE* lub_level_ptr);
 
 /*defines*/
 

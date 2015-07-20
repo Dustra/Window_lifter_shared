@@ -89,7 +89,7 @@ extern T_ULONG rul_count_gen;
 
 /* Functions prototypes */
 
-extern void Func_500us(void);
+extern void WL_Func_1ms(void);
 
 
 /* Functions macros */

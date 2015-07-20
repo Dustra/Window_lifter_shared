@@ -31,6 +31,7 @@
 #include "GPIO.h"
 
 
+
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
 /* Functions macros */
@@ -112,6 +113,11 @@
 
 void SchM_3P125MS_Task(void)
 {
+
+	//LED_ON(LED2);
+	WL_Func_1ms();
+	//LED_OFF(LED2);
+	
 	
 }
 void SchM_6P25MS_Task(void)
@@ -121,25 +127,22 @@ void SchM_6P25MS_Task(void)
 void SchM_12P5MS_Task(void)
 {
 
-		LED_TOGGLE(LED1);
 	
 }
 void SchM_25MS_Task(void)
 {
 
-		LED_TOGGLE(LED2);
+
 		
 }
 void SchM_50MS_Task(void)
 {
 
-		LED_TOGGLE(LED3);
+
 
 }
 void SchM_100MS_Task(void)
 {
-
-		LED_TOGGLE(LED4);
 
 }
 
