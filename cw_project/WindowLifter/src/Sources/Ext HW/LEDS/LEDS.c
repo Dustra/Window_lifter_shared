@@ -1,41 +1,35 @@
+/*******************************************************************************/
 /*============================================================================*/
 /*                        SV C CE SOFTWARE GROUP                              */
 /*============================================================================*/
 /*                        OBJECT SPECIFICATION                                */
 /*============================================================================*
-* C Source:        main.c
+* C Source:        LEDS.c
 * Instance:         RPL_1
 * %version:         2 %
 * %created_by:      uid02495 %
-* %date_created:    Wed	July  1 14:38:03 2004 %
+* %date_created:   	Wed July  1 14:38:03 2004 %
 *=============================================================================*/
 /* DESCRIPTION : C source template file                                       */
 /*============================================================================*/
-/* FUNCTION COMMENT : This file describes main routine of the window lifter   */
-/*                                                							  */
+/* FUNCTION COMMENT : This file describes the statemachine working by PIT 	  */
+/* Interruptions	                                                 		  */
 /*                                                                            */
 /*============================================================================*/
 /*                               OBJECT HISTORY                               */
 /*============================================================================*/
 /*  REVISION |   DATE      |                               |      AUTHOR      */
 /*----------------------------------------------------------------------------*/
-/*  1.0      | 01/07/2015  |                               | Erick Salinas     */
+/*  1.0      | 01/07/2015  |                               | Erick Salinas    */
 /* Integration under Continuus CM                                             */
 /*============================================================================*/
 
 /* Includes */
 /* -------- */
-
-#include 	"MCU_derivative.h"
-#include    "GPIO.h"			/*Services*/
-#include    "PIT.h"
-#include    "APP.h"
-#include	"STM.h"
-#include 	"LEDS.h"
-#include 	"Switches.h"
-#include 	"SchM.h"
-#include 	"MemAlloc_Cfg.h"
-
+#include "typedefs.h"
+#include "APP.h"		/*Services*/
+#include "GPIO.h"
+#include "LEDS.h"
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
@@ -52,12 +46,11 @@
 
 /* LONG and STRUCTURE constants */
 
-
-
 /*======================================================*/ 
 /* Definition of RAM variables                          */
 /*======================================================*/ 
 /* BYTE RAM variables */
+
 
 
 /* WORD RAM variables */
@@ -76,11 +69,13 @@
 /* Private functions prototypes */
 /* ---------------------------- */
 
-void disableWatchdog(void);
+ //void Out_Leds(T_UBYTE* lub_level_ptr);
 
 
 /* Exported functions prototypes */
 /* ----------------------------- */
+
+
 
 /* Inline functions */
 /* ---------------- */
@@ -95,61 +90,132 @@ void disableWatchdog(void);
 
 /* Private functions */
 /* ----------------- */
+
+
 /**************************************************************
- *  Name                 : disableWatchdog
- *  Description          : Disable function of watchdog
+ *  Name                 : LED_Init
+ *  Description          :	Translate the value in variable rub_level to digital outputs
  *  Parameters           :  [Input, Output, Input / output]
- *  Return               :	void
+ *  Return               :
  *  Critical/explanation :    [No]
  **************************************************************/
+ void LED_Init(void)
+ {
+ 	
+ 	vfnGPIO_Init_channel(RA0,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA0-> as output*/
+	vfnGPIO_Output (RA0, 0);
+	vfnGPIO_Init_channel(RA1,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA1-> as output*/
+	vfnGPIO_Output (RA1, 0);
+	vfnGPIO_Init_channel(RA2,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA2-> as output*/
+	vfnGPIO_Output (RA2, 0);
+	vfnGPIO_Init_channel(RA3,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA3-> as output*/
+	vfnGPIO_Output (RA3, 0);
+	vfnGPIO_Init_channel(RA4,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA4-> as output*/
+	vfnGPIO_Output (RA4, 0);
+	vfnGPIO_Init_channel(RA5,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA5-> as output*/
+	vfnGPIO_Output (RA5, 0);
+	vfnGPIO_Init_channel(RA6,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA6-> as output*/
+	vfnGPIO_Output (RA6, 0);
+	vfnGPIO_Init_channel(RA7,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA7-> as output*/
+	vfnGPIO_Output (RA7, 0);
+	vfnGPIO_Init_channel(RA8,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA8-> as output*/
+	vfnGPIO_Output (RA8, 0);
+	vfnGPIO_Init_channel(RA9,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA9-> as output*/
+	vfnGPIO_Output (RA9, 0);
+	vfnGPIO_Init_channel(RA10,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA10-> as output*/
+	vfnGPIO_Output (RA10, 0);
+	vfnGPIO_Init_channel(RA11,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA11-> as output*/
+	vfnGPIO_Output (RA11, 0);
+	vfnGPIO_Init_channel(RA12,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA12-> as output*/
+	vfnGPIO_Output (RA12, 0);
+	vfnGPIO_Init_channel(RA13,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA13-> as output*/
+	vfnGPIO_Output (RA13, 0);
+	vfnGPIO_Init_channel(RA14,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA14-> as output*/
+	vfnGPIO_Output (RA14, 0);
+	vfnGPIO_Init_channel(RA15,GPIO_OUTPUT,GPIO_OPEN_DRAIN_DISABLE);  /*RA15-> as output*/
+	vfnGPIO_Output (RA15, 0);
+ 
 
-void disableWatchdog(void)
-{
-  SWT.SR.R = 0x0000c520;     /* Write keys to clear soft lock bit */
-  SWT.SR.R = 0x0000d928; 
-  SWT.CR.R = 0x8000010A;     /* Clear watchdog enable (WEN) */
 }
-
-/**************************************************************
- *  Name                 : main
- *  Description          : main routine of the aplication, contains configuration routines en infinite loop
+ 
+ /**************************************************************
+ *  Name                 : Out_Leds
+ *  Description          :	Translate the value in variable rub_level to digital outputs
  *  Parameters           :  [Input, Output, Input / output]
- *  Return               :	void
+ *  Return               :
  *  Critical/explanation :    [No]
  **************************************************************/
-
-int main(void) 
-
+ 
+ void Out_Leds(T_UBYTE* lub_level_ptr)
 {
-	/*Initiate Run Mode at 64K*/
-	initModesAndClock();
-	/*Disable Watchdog in private function*/
-	disableWatchdog();
-	/*Config of Malloc Module*/
-	MemAllocInit(&MemAllocConfig);
-	/*Init of internal HW LEDS*/
-	vfnGPIO_LED_Init();	
-	/*Init of external HW LEDS*/
-	LED_Init();
-	/*Init of Push*/
-	PUSH_Init();
-	/*INT interruptions*/
-	INTC_InitINTCInterrupts();
-	/*STM TIMER Module Configuration*/
-	Timer_Config();
-	/*Init Except Handler*/
-	EXCEP_InitExceptionHandlers();
-	/*Config of Scheduler*/
-	SchM_Init(&SchConfig);
-	/*Start Scheduler and loop in Background Function*/
-	SchM_Start();
-    
-    while(1)
-    {
-
 	
-    }
+	if(*lub_level_ptr<LEVEL_MIN)
+	{
+		*lub_level_ptr=LEVEL_MIN;
+	}
+	
+	if(*lub_level_ptr>LEVEL_MAX)
+	{
+		*lub_level_ptr=LEVEL_MAX;
+	}
+	
+	LED_OFF(RA0);
+	LED_OFF(RA1);
+	LED_OFF(RA2);
+	LED_OFF(RA3);
+	LED_OFF(RA4);
+	LED_OFF(RA5);
+	LED_OFF(RA6);
+	LED_OFF(RA7);
+	LED_OFF(RA8);
+	LED_OFF(RA9);
+	
+	
+	if(*lub_level_ptr>LEVEL_MIN)
+	{
+		LED_ON(RA0);
+	}
+
+	if(*lub_level_ptr>LEVEL1)
+	{
+		LED_ON(RA1);
+	}
+	if(*lub_level_ptr>LEVEL2)
+	{
+		LED_ON(RA2);
+	}
+	if(*lub_level_ptr>LEVEL3)
+	{
+		LED_ON(RA3);
+	}
+	if(*lub_level_ptr>LEVEL4)
+	{
+		LED_ON(RA4);
+	}
+	if(*lub_level_ptr>LEVEL5)
+	{
+		LED_ON(RA5);
+	}
+	if(*lub_level_ptr>LEVEL6)
+	{
+		LED_ON(RA6);
+	}
+	if(*lub_level_ptr>LEVEL7)
+	{
+		LED_ON(RA7);
+	}
+	if(*lub_level_ptr>LEVEL8)
+	{
+		LED_ON(RA8);
+	}
+	if(*lub_level_ptr>LEVEL9)
+	{
+		LED_ON(RA9);
+	}
+	
+	
 }
+
 
 
 /* Exported functions */
@@ -161,6 +227,16 @@ int main(void)
  *  Return               :
  *  Critical/explanation :    [yes / No]
  **************************************************************/
+
+
+	
+
+
+
+
+
+
+
 
 
 

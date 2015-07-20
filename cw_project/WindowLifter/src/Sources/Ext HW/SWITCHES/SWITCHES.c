@@ -1,40 +1,34 @@
+/*******************************************************************************/
 /*============================================================================*/
 /*                        SV C CE SOFTWARE GROUP                              */
 /*============================================================================*/
 /*                        OBJECT SPECIFICATION                                */
 /*============================================================================*
-* C Source:        main.c
+* C Source:        Switches.c
 * Instance:         RPL_1
 * %version:         2 %
 * %created_by:      uid02495 %
-* %date_created:    Wed	July  1 14:38:03 2004 %
+* %date_created:   	Wed July  1 14:38:03 2004 %
 *=============================================================================*/
 /* DESCRIPTION : C source template file                                       */
 /*============================================================================*/
-/* FUNCTION COMMENT : This file describes main routine of the window lifter   */
-/*                                                							  */
+/* FUNCTION COMMENT : This file describes the statemachine working by PIT 	  */
+/* Interruptions	                                                 		  */
 /*                                                                            */
 /*============================================================================*/
 /*                               OBJECT HISTORY                               */
 /*============================================================================*/
 /*  REVISION |   DATE      |                               |      AUTHOR      */
 /*----------------------------------------------------------------------------*/
-/*  1.0      | 01/07/2015  |                               | Erick Salinas     */
+/*  1.0      | 01/07/2015  |                               | Erick Salinas    */
 /* Integration under Continuus CM                                             */
 /*============================================================================*/
 
 /* Includes */
 /* -------- */
 
-#include 	"MCU_derivative.h"
-#include    "GPIO.h"			/*Services*/
-#include    "PIT.h"
-#include    "APP.h"
-#include	"STM.h"
-#include 	"LEDS.h"
-#include 	"Switches.h"
-#include 	"SchM.h"
-#include 	"MemAlloc_Cfg.h"
+#include "GPIO.h"
+#include "Switches.h"
 
 
 /* Functions macros, constants, types and datas         */
@@ -52,12 +46,11 @@
 
 /* LONG and STRUCTURE constants */
 
-
-
 /*======================================================*/ 
 /* Definition of RAM variables                          */
 /*======================================================*/ 
 /* BYTE RAM variables */
+
 
 
 /* WORD RAM variables */
@@ -76,11 +69,13 @@
 /* Private functions prototypes */
 /* ---------------------------- */
 
-void disableWatchdog(void);
+
 
 
 /* Exported functions prototypes */
 /* ----------------------------- */
+
+
 
 /* Inline functions */
 /* ---------------- */
@@ -95,61 +90,19 @@ void disableWatchdog(void);
 
 /* Private functions */
 /* ----------------- */
+
+
 /**************************************************************
- *  Name                 : disableWatchdog
- *  Description          : Disable function of watchdog
+ *  Name                 : Out_Leds
+ *  Description          :	Translate the value in variable rub_level to digital outputs
  *  Parameters           :  [Input, Output, Input / output]
- *  Return               :	void
+ *  Return               :
  *  Critical/explanation :    [No]
  **************************************************************/
 
-void disableWatchdog(void)
-{
-  SWT.SR.R = 0x0000c520;     /* Write keys to clear soft lock bit */
-  SWT.SR.R = 0x0000d928; 
-  SWT.CR.R = 0x8000010A;     /* Clear watchdog enable (WEN) */
-}
+ 
+ 
 
-/**************************************************************
- *  Name                 : main
- *  Description          : main routine of the aplication, contains configuration routines en infinite loop
- *  Parameters           :  [Input, Output, Input / output]
- *  Return               :	void
- *  Critical/explanation :    [No]
- **************************************************************/
-
-int main(void) 
-
-{
-	/*Initiate Run Mode at 64K*/
-	initModesAndClock();
-	/*Disable Watchdog in private function*/
-	disableWatchdog();
-	/*Config of Malloc Module*/
-	MemAllocInit(&MemAllocConfig);
-	/*Init of internal HW LEDS*/
-	vfnGPIO_LED_Init();	
-	/*Init of external HW LEDS*/
-	LED_Init();
-	/*Init of Push*/
-	PUSH_Init();
-	/*INT interruptions*/
-	INTC_InitINTCInterrupts();
-	/*STM TIMER Module Configuration*/
-	Timer_Config();
-	/*Init Except Handler*/
-	EXCEP_InitExceptionHandlers();
-	/*Config of Scheduler*/
-	SchM_Init(&SchConfig);
-	/*Start Scheduler and loop in Background Function*/
-	SchM_Start();
-    
-    while(1)
-    {
-
-	
-    }
-}
 
 
 /* Exported functions */
@@ -162,5 +115,15 @@ int main(void)
  *  Critical/explanation :    [yes / No]
  **************************************************************/
 
+
+void PUSH_Init(void)
+{
+	
+	vfnGPIO_Init_channel(PUSH1,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE4 --> PUSH1*/
+	vfnGPIO_Init_channel(PUSH2,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE5 --> PUSH2*/
+	vfnGPIO_Init_channel(PUSH3,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE6 --> PUSH3*/
+	vfnGPIO_Init_channel(PUSH4,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE7 --> PUSH4*/
+	
+}
 
 

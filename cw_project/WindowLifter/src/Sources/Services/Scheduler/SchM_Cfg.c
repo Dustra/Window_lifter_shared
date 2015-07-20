@@ -1,41 +1,34 @@
+/*******************************************************************************/
 /*============================================================================*/
 /*                        SV C CE SOFTWARE GROUP                              */
 /*============================================================================*/
 /*                        OBJECT SPECIFICATION                                */
 /*============================================================================*
-* C Source:        main.c
+* C Source:        APP.c
 * Instance:         RPL_1
 * %version:         2 %
 * %created_by:      uid02495 %
-* %date_created:    Wed	July  1 14:38:03 2004 %
+* %date_created:   	Wed July  1 14:38:03 2004 %
 *=============================================================================*/
 /* DESCRIPTION : C source template file                                       */
 /*============================================================================*/
-/* FUNCTION COMMENT : This file describes main routine of the window lifter   */
-/*                                                							  */
+/* FUNCTION COMMENT : This file describes the statemachine working by PIT 	  */
+/* Interruptions	                                                 		  */
 /*                                                                            */
 /*============================================================================*/
 /*                               OBJECT HISTORY                               */
 /*============================================================================*/
 /*  REVISION |   DATE      |                               |      AUTHOR      */
 /*----------------------------------------------------------------------------*/
-/*  1.0      | 01/07/2015  |                               | Erick Salinas     */
+/*  1.0      | 01/07/2015  |                               | Erick Salinas    */
 /* Integration under Continuus CM                                             */
 /*============================================================================*/
 
 /* Includes */
 /* -------- */
 
-#include 	"MCU_derivative.h"
-#include    "GPIO.h"			/*Services*/
-#include    "PIT.h"
-#include    "APP.h"
-#include	"STM.h"
-#include 	"LEDS.h"
-#include 	"Switches.h"
-#include 	"SchM.h"
-#include 	"MemAlloc_Cfg.h"
-
+#include "SchM_Cfg.h"
+#include "SchM_Tasks.h"
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
@@ -52,13 +45,29 @@
 
 /* LONG and STRUCTURE constants */
 
+const SchTaskDescriptorType SchTaskTableConfig []=
+{
+	/*{Offset, MASK, TASK ID , Func PTR}*/
+	{0	,	MASK_3P125MS, 	TASK_3P125MS, 	&SchM_3P125MS_Task	}
+//	{1	,	MASK_6P25MS, 	TASK_6P25MS, 	&SchM_6P25MS_Task	},
+//	{2	,	MASK_12P5MS, 	TASK_12P5MS,	&SchM_12P5MS_Task	},
+//	{3	,	MASK_25MS, 		TASK_25MS, 		&SchM_25MS_Task		},
+//	{5	,	MASK_50MS, 		TASK_50MS, 		&SchM_50MS_Task		},
+//	{6	,	MASK_100MS, 	TASK_100MS,		&SchM_100MS_Task	}
+	
+};
 
+const SchConfigType SchConfig =
+{
+	
+	(sizeof(SchTaskTableConfig)/sizeof(SchTaskTableConfig[0])),
+	SchTaskTableConfig
+};
 
 /*======================================================*/ 
 /* Definition of RAM variables                          */
 /*======================================================*/ 
 /* BYTE RAM variables */
-
 
 /* WORD RAM variables */
 
@@ -76,11 +85,11 @@
 /* Private functions prototypes */
 /* ---------------------------- */
 
-void disableWatchdog(void);
-
 
 /* Exported functions prototypes */
 /* ----------------------------- */
+
+
 
 /* Inline functions */
 /* ---------------- */
@@ -96,60 +105,16 @@ void disableWatchdog(void);
 /* Private functions */
 /* ----------------- */
 /**************************************************************
- *  Name                 : disableWatchdog
- *  Description          : Disable function of watchdog
+ *  Name                 : delay_ms
+ *  Description          : Delay design to stop the system while waiting for desgined time
  *  Parameters           :  [Input, Output, Input / output]
  *  Return               :	void
  *  Critical/explanation :    [No]
  **************************************************************/
 
-void disableWatchdog(void)
-{
-  SWT.SR.R = 0x0000c520;     /* Write keys to clear soft lock bit */
-  SWT.SR.R = 0x0000d928; 
-  SWT.CR.R = 0x8000010A;     /* Clear watchdog enable (WEN) */
-}
 
-/**************************************************************
- *  Name                 : main
- *  Description          : main routine of the aplication, contains configuration routines en infinite loop
- *  Parameters           :  [Input, Output, Input / output]
- *  Return               :	void
- *  Critical/explanation :    [No]
- **************************************************************/
+ 
 
-int main(void) 
-
-{
-	/*Initiate Run Mode at 64K*/
-	initModesAndClock();
-	/*Disable Watchdog in private function*/
-	disableWatchdog();
-	/*Config of Malloc Module*/
-	MemAllocInit(&MemAllocConfig);
-	/*Init of internal HW LEDS*/
-	vfnGPIO_LED_Init();	
-	/*Init of external HW LEDS*/
-	LED_Init();
-	/*Init of Push*/
-	PUSH_Init();
-	/*INT interruptions*/
-	INTC_InitINTCInterrupts();
-	/*STM TIMER Module Configuration*/
-	Timer_Config();
-	/*Init Except Handler*/
-	EXCEP_InitExceptionHandlers();
-	/*Config of Scheduler*/
-	SchM_Init(&SchConfig);
-	/*Start Scheduler and loop in Background Function*/
-	SchM_Start();
-    
-    while(1)
-    {
-
-	
-    }
-}
 
 
 /* Exported functions */
@@ -161,6 +126,5 @@ int main(void)
  *  Return               :
  *  Critical/explanation :    [yes / No]
  **************************************************************/
-
 
 

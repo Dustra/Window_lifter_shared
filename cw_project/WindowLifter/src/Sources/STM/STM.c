@@ -8,3 +8,14 @@ void Timer_Config()
 	STM.CH[0].CCR.R=1;		/*Initialize channel 1*/
 	
 }
+
+
+void delay_ms(vuint32_t time_ms)
+{
+	TIMER_REGISTER=0;
+	while(TIMER_REGISTER<time_ms*1000)
+	{
+		
+	}
+	
+}
