@@ -45,24 +45,17 @@ typedef T_UBYTE SchTaskOffsetType;
 
 typedef enum
 {
-	MASK_3P125MS=	1,
-	MASK_6P25MS	=	7,
-	MASK_12P5MS	=	15,
-	MASK_25MS	=	31,
-	MASK_50MS	=	63,
-	MASK_100MS	=	127
+	MASK_1MS=1,
+	MASK_2MS=2
+
 		
 }SchTaskMaskType;
 
 typedef enum
 {
 	TASK_BKG,
-	TASK_3P125MS,
-	TASK_6P25MS,
-	TASK_12P5MS,
-	TASK_25MS,
-	TASK_50MS,
-	TASK_100MS
+	TASK_1MS,
+	TASK_2MS
 	
 }SchTaskIDType;
 

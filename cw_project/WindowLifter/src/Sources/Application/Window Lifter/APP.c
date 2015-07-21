@@ -187,8 +187,8 @@ void State_Machine_1ms(void)
 
 void Func_state_initial()
 {
-	OFF_LED_DOWN;
-    OFF_LED_UP;                           
+//	OFF_LED_DOWN;
+//  OFF_LED_UP;                           
 	Out_Leds(&rub_level);
 	
 	if(UP_PUSH==ACTIVATED)
@@ -229,12 +229,16 @@ void Func_state_up_inter()
 	if(UP_PUSH==DEACTIVATED && rul_count_gen<t_500ms)
 	{
 		rub_state=state_up_aut;
+		rub_level++;
+		Out_Leds(&rub_level);
 		rul_count_gen=0;
 	}
 	
 	if(UP_PUSH==ACTIVATED && rul_count_gen>t_500ms)
 	{
 		rub_state=state_up_manual;
+		rub_level++;
+		Out_Leds(&rub_level);
 		rul_count_gen=0;
 	}
 
@@ -259,12 +263,22 @@ void Func_state_down_inter()
 	if(DOWN_PUSH==DEACTIVATED && rul_count_gen<t_500ms)
 		{
 			rub_state=state_down_aut;
+			if(rub_level>LEVEL_MIN)
+			{
+				rub_level--;
+			}
+			Out_Leds(&rub_level);
 			rul_count_gen=0;
 		}
 		
 	if(DOWN_PUSH==ACTIVATED && rul_count_gen>t_500ms)
 		{
 			rub_state=state_down_manual;
+			if(rub_level>LEVEL_MIN)
+			{
+				rub_level--;
+			}
+			Out_Leds(&rub_level);
 			rul_count_gen=0;
 		}
 			
@@ -281,43 +295,38 @@ void Func_state_down_inter()
 
 void Func_state_up_auto()
 {
-ON_LED_UP;
-rul_count_gen++;
 
-if(rub_level<LEVEL_MAX)
-{
-	
-	if(rul_count_gen>t_400ms)
+	if(rub_level<LEVEL_MAX)
+	{
+		ON_LED_UP;
+		rul_count_gen++;
+
+		if(rul_count_gen>t_400ms)
 		{
+		
 			rub_level++;
 			Out_Leds(&rub_level);
 			rul_count_gen=0;
 		}
+
+		
+	}
+		
 	else
 		{
-			/*Do nothing*/
+			rul_count_gen=0;
+			rub_state=state_initial;
+			OFF_LED_UP;
 		}
-	
-}
-	
-else
-	{
-		rul_count_gen=0;
-		rub_state=state_initial;
-	}
-	
-	
-if(DOWN_PUSH==ACTIVATED)
+		
+		
+	if(DOWN_PUSH==ACTIVATED)
 	{
 		rul_count_gen=0;
 		rub_state= state_initial;
+		OFF_LED_UP;
 		delay_ms(500);
 	}
-else
-	{
-		/*Do nothing*/
-	}
-		
 			
 }
 
@@ -332,38 +341,35 @@ else
 void Func_state_down_auto()
 {
 
-	if(rub_level<LEVEL_MIN+1)
-		{
-		
-		rul_count_gen=0;
-		rub_state=state_initial;
-		
-		}
-		else
-		{
-			
+	if(rub_level>LEVEL_MIN)
+	{
 		ON_LED_DOWN;
-		rul_count_gen++;				
-	
+		rul_count_gen++;
 		
 		if(rul_count_gen>t_400ms)
 		{
-		
-		rub_level--;
-		Out_Leds(&rub_level);
-		rul_count_gen=0;
-		
+			rub_level--;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
 		}
+	}
 		
-		if(UP_PUSH==ACTIVATED)
+	else
 		{
 			rul_count_gen=0;
-			rub_state= state_initial;
-			delay_ms(500);
+			rub_state=state_initial;
+			OFF_LED_DOWN;
 		}
-					
-		}
-
+		
+		
+	if(UP_PUSH==ACTIVATED)
+	{
+		rul_count_gen=0;
+		rub_state= state_initial;
+		OFF_LED_DOWN;
+		delay_ms(500);
+	}
+	
 }
 
 /**************************************************************
@@ -376,20 +382,25 @@ void Func_state_down_auto()
 
 void Func_state_up_manual()
 {
-	ON_LED_UP;
-	rul_count_gen++;
 
-	
-	if(rub_level<LEVEL_MAX && rul_count_gen>t_400ms)
+	if(rub_level<LEVEL_MAX)
 	{
+		ON_LED_UP;
+		rul_count_gen++;
 		
-		rub_level++;
-		Out_Leds(&rub_level);
+		if(rul_count_gen>t_400ms)
+		{
+			rub_level++;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+
+	}
+	else
+	{
 		OFF_LED_UP;
-		rul_count_gen=0;
 	}
 		
-	
 	
 	if(UP_PUSH==DEACTIVATED)
 	{
@@ -397,10 +408,6 @@ void Func_state_up_manual()
 		OFF_LED_UP;
 	}
 	
-	if(rub_level>LEVEL_MAX-1)
-	{
-		OFF_LED_UP;
-	}
 	
 	
 }
@@ -415,20 +422,25 @@ void Func_state_up_manual()
 
 void Func_state_down_manual()
 {
-	ON_LED_DOWN;
-	rul_count_gen++;
 
-	
-	if(rub_level>LEVEL_MIN && rul_count_gen>t_400ms)
+	if(rub_level>LEVEL_MIN)
 	{
+		ON_LED_DOWN;
+		rul_count_gen++;
 		
-		rub_level--;
-		Out_Leds(&rub_level);
+		if(rul_count_gen>t_400ms)
+		{
+			rub_level--;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+
+	}
+	else
+	{
 		OFF_LED_DOWN;
-		rul_count_gen=0;
 	}
 		
-	
 	
 	if(DOWN_PUSH==DEACTIVATED)
 	{
@@ -436,11 +448,7 @@ void Func_state_down_manual()
 		OFF_LED_DOWN;
 	}
 	
-	if(rub_level<LEVEL_MIN+1)
-	{
-		OFF_LED_DOWN;
-	}
-	
+
 }
 
 /**************************************************************
@@ -454,27 +462,33 @@ void Func_state_down_manual()
 void Func_state_antinpinch()
 {
 	OFF_LED_UP;
-	if(rub_level<LEVEL_MIN+1)
-	{
-	rul_count_gen=0;
-	delay_ms(t_5000ms);
-	rub_state=state_initial;
 
-	}
-	else
+	if(rub_level>LEVEL_MIN)
 	{
 		
-					
-	ON_LED_DOWN;
-	rub_level--;
-	Out_Leds(&rub_level);
-	if(rub_level>0)
-	{
-		delay_ms(t_400ms);	
+		ON_LED_DOWN;
+		rul_count_gen++;
+
+		if(rul_count_gen>t_400ms)
+		{
+			rub_level--;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
 	}
-	
-	}
-	
+		
+	else
+		{
+			rul_count_gen++;
+			if(rul_count_gen>t_5000ms)
+			{
+				rul_count_gen=0;
+				rub_state=state_initial;
+				OFF_LED_DOWN;
+			}
+		
+		
+		}
 }
 	
 	

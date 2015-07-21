@@ -111,42 +111,15 @@
  *  Critical/explanation :    [yes / No]
  **************************************************************/
 
-void SchM_3P125MS_Task(void)
+void SchM_1MS_Task(void)
 {
-
-	//LED_ON(LED2);
 	WL_Func_1ms();
-	//LED_OFF(LED2);
-	
-	
+
 }
-void SchM_6P25MS_Task(void)
+void SchM_2MS_Task(void)
 {
 
 }
-void SchM_12P5MS_Task(void)
-{
-
-	
-}
-void SchM_25MS_Task(void)
-{
-
-
-		
-}
-void SchM_50MS_Task(void)
-{
-
-
-
-}
-void SchM_100MS_Task(void)
-{
-
-}
-
-
 
 
 

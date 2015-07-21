@@ -48,7 +48,7 @@
 const SchTaskDescriptorType SchTaskTableConfig []=
 {
 	/*{Offset, MASK, TASK ID , Func PTR}*/
-	{0	,	MASK_3P125MS, 	TASK_3P125MS, 	&SchM_3P125MS_Task	}
+	{0	,	MASK_1MS, 	TASK_1MS, 	&SchM_1MS_Task	}
 //	{1	,	MASK_6P25MS, 	TASK_6P25MS, 	&SchM_6P25MS_Task	},
 //	{2	,	MASK_12P5MS, 	TASK_12P5MS,	&SchM_12P5MS_Task	},
 //	{3	,	MASK_25MS, 		TASK_25MS, 		&SchM_25MS_Task		},
