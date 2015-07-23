@@ -52,6 +52,9 @@
 /*======================================================*/ 
 /* BYTE RAM variables */
 
+T_UBYTE rub_Debounse_UP_Push=0;
+T_UBYTE rub_Debounse_DOWN_Push=0;
+T_UBYTE rub_Debounse_ANTIPINCH=0;
 
 
 /* WORD RAM variables */
@@ -109,16 +112,12 @@
 /* Exported functions */
 /* ------------------ */
 /**************************************************************
- *  Name                 :	export_func
- *  Description          :
- *  Parameters           :  [Input, Output, Input / output]
+ *  Name                 :	PUSH_Init
+ *  Description          :	Initialize push ports as inputs
+ *  Parameters           :  [void]
  *  Return               :
  *  Critical/explanation :    [yes / No]
  **************************************************************/
-T_UBYTE rub_Debounse_UP_Push=0;
-T_UBYTE rub_Debounse_DOWN_Push=0;
-T_UBYTE rub_Debounse_ANTIPINCH=0;
-
 
 
 void PUSH_Init(void)
@@ -131,7 +130,14 @@ void PUSH_Init(void)
 	
 }
 
-
+/**************************************************************
+ *  Name                 :	Debounse_PUSH_1ms
+ *  Description          :	Detects a valid push without debounse. Ejecute in the 1ms task.
+ *  Parameters           :  [void]
+ *  Return               :
+ *  Critical/explanation :    [yes / No]
+ **************************************************************/
+ 
 void Debounse_PUSH_1ms(void)
 {
 	

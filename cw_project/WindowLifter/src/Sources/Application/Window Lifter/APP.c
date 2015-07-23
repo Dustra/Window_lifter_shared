@@ -312,14 +312,6 @@ void Func_state_up_auto()
 		}
 		
 		
-	if(rub_Debounse_DOWN_Push==ENABLE)
-	{
-		rul_count_gen=0;
-		rub_state= state_initial;
-		OFF_LED_UP;
-		delay_ms(500);
-	}
-			
 }
 
 /**************************************************************
@@ -353,15 +345,7 @@ void Func_state_down_auto()
 		OFF_LED_DOWN;
 	}
 		
-		
-	if(rub_Debounse_UP_Push==ENABLE)
-	{
-		rul_count_gen=0;
-		rub_state= state_initial;
-		OFF_LED_DOWN;
-		delay_ms(500);
-	}
-	
+
 }
 
 /**************************************************************
