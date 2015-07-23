@@ -46,7 +46,7 @@ typedef T_UBYTE SchTaskOffsetType;
 typedef enum
 {
 	MASK_1MS=1,
-	MASK_2MS=2
+	MASK_2MS=3
 
 		
 }SchTaskMaskType;
@@ -112,12 +112,6 @@ typedef struct
 	SchStateType SchStatus;
 		
 }SchControltype;
-
-
-
-
-
-
 
 
 /*==================================================*/ 

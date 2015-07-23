@@ -29,6 +29,9 @@
 
 #include "SchM_Tasks.h"
 #include "GPIO.h"
+#include "SWITCHES.h"
+#include "APP.h"
+
 
 
 
@@ -113,12 +116,12 @@
 
 void SchM_1MS_Task(void)
 {
-	WL_Func_1ms();
+	Debounse_PUSH_1ms();
 
 }
 void SchM_2MS_Task(void)
 {
-
+	WL_Func_2ms();
 }
 
 

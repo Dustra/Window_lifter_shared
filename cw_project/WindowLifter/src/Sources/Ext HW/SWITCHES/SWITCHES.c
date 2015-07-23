@@ -28,7 +28,8 @@
 /* -------- */
 
 #include "GPIO.h"
-#include "Switches.h"
+#include "SWITCHES.h"
+
 
 
 /* Functions macros, constants, types and datas         */
@@ -114,6 +115,10 @@
  *  Return               :
  *  Critical/explanation :    [yes / No]
  **************************************************************/
+T_UBYTE rub_Debounse_UP_Push=0;
+T_UBYTE rub_Debounse_DOWN_Push=0;
+T_UBYTE rub_Debounse_ANTIPINCH=0;
+
 
 
 void PUSH_Init(void)
@@ -125,5 +130,79 @@ void PUSH_Init(void)
 	vfnGPIO_Init_channel(PUSH4,GPIO_INPUT,GPIO_OPEN_DRAIN_ENABLE);  /* PE7 --> PUSH4*/
 	
 }
+
+
+void Debounse_PUSH_1ms(void)
+{
+	
+static T_UBYTE lub_counter_up=0;
+static T_UBYTE lub_counter_down=0;
+static T_UBYTE lub_counter_antipinch=0;
+
+
+	/*Debounse Up push*/
+	
+	if(UP_PUSH==ACTIVATED)
+	{
+		lub_counter_up++;
+		if(lub_counter_up>t_10ms_debounse)
+		{
+			rub_Debounse_UP_Push=ENABLE;
+			lub_counter_up=0;	
+		}
+	}
+	else
+	{
+		lub_counter_up=0;
+		rub_Debounse_UP_Push=DISABLE;
+	}
+
+
+	/*Debounse Down Push*/
+	
+	if(DOWN_PUSH==ACTIVATED)
+	{
+		lub_counter_down++;
+		if(lub_counter_down>t_10ms_debounse)
+		{
+			rub_Debounse_DOWN_Push=ENABLE;
+			lub_counter_down=0;	
+		}
+				
+	}
+	else
+	{
+		lub_counter_down=0;
+		rub_Debounse_DOWN_Push=DISABLE;
+	}
+	
+	/*Debounse Antipinch*/
+	
+	if(ANTIPINCH==ACTIVATED)
+	{
+		lub_counter_antipinch++;
+		if(lub_counter_antipinch>t_10ms_debounse)
+		{
+			rub_Debounse_ANTIPINCH=ENABLE;
+			lub_counter_antipinch=0;	
+		}
+		
+	}
+	else
+	{
+		lub_counter_antipinch=0;
+		rub_Debounse_ANTIPINCH=DISABLE;
+	}
+	
+
+
+}
+
+
+
+
+
+
+
 
 

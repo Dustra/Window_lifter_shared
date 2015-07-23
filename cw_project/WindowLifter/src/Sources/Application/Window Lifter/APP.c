@@ -31,7 +31,7 @@
 #include "GPIO.h"
 #include "STM.h"
 #include "LEDS.h"
-#include "Switches.h"
+#include "SWITCHES.h"
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
@@ -74,7 +74,6 @@ T_ULONG rul_count_gen=0;
 /* Private functions prototypes */
 /* ---------------------------- */
 
-void State_Machine_1ms(void);
 void Func_state_initial(void);
 void Func_state_up_inter(void);
 void Func_state_down_inter(void);
@@ -122,7 +121,7 @@ void Func_state_antinpinch(void);
  **************************************************************/
 
 
-void State_Machine_1ms(void)
+void State_Machine_2ms(void)
 {
 	
 		switch(rub_state)
@@ -187,26 +186,19 @@ void State_Machine_1ms(void)
 
 void Func_state_initial()
 {
-//	OFF_LED_DOWN;
-//  OFF_LED_UP;                           
-	Out_Leds(&rub_level);
+ 
+ Out_Leds(&rub_level);
 	
-	if(UP_PUSH==ACTIVATED)
+	if(rub_Debounse_UP_Push==ENABLE)
 	{
-		rul_count_gen++;
-		if(rul_count_gen>t_10ms)
-		{
-			rub_state=state_up_inter;
-		}
+		rub_state=state_up_inter;
+		
 	}
 	
-	if(DOWN_PUSH==ACTIVATED)
+	if(rub_Debounse_DOWN_Push==ENABLE)
 	{
-		rul_count_gen++;
-		if(rul_count_gen>t_10ms)
-		{
-			rub_state=state_down_inter;
-		}
+		rub_state=state_down_inter;
+	
 	}
 			
 }
@@ -320,7 +312,7 @@ void Func_state_up_auto()
 		}
 		
 		
-	if(DOWN_PUSH==ACTIVATED)
+	if(rub_Debounse_DOWN_Push==ENABLE)
 	{
 		rul_count_gen=0;
 		rub_state= state_initial;
@@ -355,14 +347,14 @@ void Func_state_down_auto()
 	}
 		
 	else
-		{
-			rul_count_gen=0;
-			rub_state=state_initial;
-			OFF_LED_DOWN;
-		}
+	{
+		rul_count_gen=0;
+		rub_state=state_initial;
+		OFF_LED_DOWN;
+	}
 		
 		
-	if(UP_PUSH==ACTIVATED)
+	if(rub_Debounse_UP_Push==ENABLE)
 	{
 		rul_count_gen=0;
 		rub_state= state_initial;
@@ -505,23 +497,15 @@ void Func_state_antinpinch()
  **************************************************************/
  
  
-void WL_Func_1ms(void)
+void WL_Func_2ms(void)
 {
-	static T_UBYTE lub_count_antipinch=0;
 
-	if(ANTIPINCH==ACTIVATED && (rub_state==state_up_aut || rub_state==state_up_manual))
+	if(	rub_Debounse_ANTIPINCH==ENABLE && (rub_state==state_up_aut || rub_state==state_up_manual))
 	{
-		lub_count_antipinch++;
-		if(lub_count_antipinch>t_10ms_antipinch)
-		{
-			lub_count_antipinch=0;
-			rub_state=state_antipinch;
-				
-		}
-		
+		rub_state=state_antipinch;
 	}
 		
-	State_Machine_1ms();
+	State_Machine_2ms();
 	
 }
 

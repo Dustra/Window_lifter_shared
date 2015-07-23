@@ -93,21 +93,4 @@ extern void SchM_2MS_Task(void);
 /* Exported defines */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif
