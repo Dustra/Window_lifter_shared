@@ -31,8 +31,8 @@
 #include    "PIT.h"
 #include    "APP.h"
 #include	"STM.h"
-#include 	"LEDS.h"
-#include 	"Switches.h"
+#include 	"LEDS_HANDLER.h"
+#include 	"SWITCHES_HANDLER.h"
 #include 	"SchM.h"
 #include 	"MemAlloc_Cfg.h"
 

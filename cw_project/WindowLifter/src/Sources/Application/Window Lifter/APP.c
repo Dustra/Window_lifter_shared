@@ -30,8 +30,8 @@
 #include "APP.h"		/*Services*/
 #include "GPIO.h"
 #include "STM.h"
-#include "LEDS.h"
-#include "SWITCHES.h"
+#include "LEDS_HANDLER.h"
+#include "SWITCHES_HANDLER.h"
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
@@ -73,7 +73,7 @@ T_ULONG rul_count_gen=0;
 
 /* Private functions prototypes */
 /* ---------------------------- */
-
+void State_Machine_2ms(void);
 void Func_state_initial(void);
 void Func_state_up_inter(void);
 void Func_state_down_inter(void);
@@ -292,10 +292,11 @@ void Func_state_up_auto()
 	{
 		ON_LED_UP;
 		rul_count_gen++;
+		
 
 		if(rul_count_gen>t_400ms)
 		{
-		
+			
 			rub_level++;
 			Out_Leds(&rub_level);
 			rul_count_gen=0;
@@ -366,6 +367,7 @@ void Func_state_up_manual()
 		
 		if(rul_count_gen>t_400ms)
 		{
+		
 			rub_level++;
 			Out_Leds(&rub_level);
 			rul_count_gen=0;
