@@ -21,6 +21,15 @@
 /*  1.0      | 02/07/2015  | SAR/SIF/SCN_xxx               | Erick Salinas    */
 /* Integration under Continuus CM                                             */
 /*============================================================================*/
+/*  1.1      | 09/07/2015  |                               | Erick Salinas    */
+/* Integration with SCHEDULER MODULE                                          */
+/*============================================================================*/
+/*  1.2      | 14/07/2015  |                               | Erick Salinas    */
+/*  Separation for better reading of State Machine                            */
+/*============================================================================*/
+/*  1.3      | 26/07/2015  |                               | Erick Salinas    */
+/* Add of debounce function		                                              */
+/*============================================================================*/
 
 
 #ifndef _APP_H        /*prevent duplicated includes*/
