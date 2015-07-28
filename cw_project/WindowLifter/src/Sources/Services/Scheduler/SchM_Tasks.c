@@ -29,6 +29,10 @@
 
 #include "SchM_Tasks.h"
 #include "GPIO.h"
+#include "SWITCHES_HANDLER.h"
+#include "APP.h"
+
+
 
 
 /* Functions macros, constants, types and datas         */
@@ -110,40 +114,16 @@
  *  Critical/explanation :    [yes / No]
  **************************************************************/
 
-void SchM_3P125MS_Task(void)
-{
-	
-}
-void SchM_6P25MS_Task(void)
+void SchM_1MS_Task(void)
 {
 
+	Debounse_PUSH_1ms();
+
 }
-void SchM_12P5MS_Task(void)
+void SchM_2MS_Task(void)
 {
-
-		LED_TOGGLE(LED1);
-	
+	WL_Func_2ms();
 }
-void SchM_25MS_Task(void)
-{
-
-		LED_TOGGLE(LED2);
-		
-}
-void SchM_50MS_Task(void)
-{
-
-		LED_TOGGLE(LED3);
-
-}
-void SchM_100MS_Task(void)
-{
-
-		LED_TOGGLE(LED4);
-
-}
-
-
 
 
 

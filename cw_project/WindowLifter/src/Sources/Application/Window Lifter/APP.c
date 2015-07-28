@@ -21,17 +21,27 @@
 /*  REVISION |   DATE      |                               |      AUTHOR      */
 /*----------------------------------------------------------------------------*/
 /*  1.0      | 01/07/2015  |                               | Erick Salinas    */
-/* Integration under Continuus CM                                             */
+/* Integration under Continous CM                                             */
 /*============================================================================*/
+/*  1.1      | 09/07/2015  |                               | Erick Salinas    */
+/* Integration with SCHEDULER MODULE                                          */
+/*============================================================================*/
+/*  1.2      | 14/07/2015  |                               | Erick Salinas    */
+/*  Separation for better reading of State Machine                            */
+/*============================================================================*/
+/*  1.3      | 26/07/2015  |                               | Erick Salinas    */
+/* Add of debounce function		                                              */
+/*============================================================================*/
+
 
 /* Includes */
 /* -------- */
-#include "typedefs.h"
+#include "MCU_derivative.h"
 #include "APP.h"		/*Services*/
 #include "GPIO.h"
 #include "STM.h"
-#include "LEDS.h"
-#include "Switches.h"
+#include "LEDS_HANDLER.h"
+#include "SWITCHES_HANDLER.h"
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
@@ -55,7 +65,7 @@
 
 T_UBYTE rub_level=LEVEL_MAX;
 T_UBYTE rub_state=state_initial;
-T_UBYTE rub_flag_1ms=0;
+
 
 /* WORD RAM variables */
 
@@ -73,6 +83,15 @@ T_ULONG rul_count_gen=0;
 
 /* Private functions prototypes */
 /* ---------------------------- */
+void State_Machine_2ms(void);
+void Func_state_initial(void);
+void Func_state_up_inter(void);
+void Func_state_down_inter(void);
+void Func_state_up_manual(void);
+void Func_state_down_manual(void);
+void Func_state_up_auto(void);
+void Func_state_down_auto(void);
+void Func_state_antinpinch(void);
 
 
 /* Exported functions prototypes */
@@ -101,15 +120,369 @@ T_ULONG rul_count_gen=0;
  *  Critical/explanation :    [No]
  **************************************************************/
 
-void delay_ms(vuint32_t time_ms)
+
+ 
+/**************************************************************
+ *  Name                 :	State_Machine_1ms
+ *  Description          :
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :
+ *  Critical/explanation :    [yes / No]
+ **************************************************************/
+
+
+void State_Machine_2ms(void)
 {
-	TIMER_REGISTER=0;
-	while(TIMER_REGISTER<time_ms*1000)
+	
+		switch(rub_state)
+		{
+
+			case state_initial:   
+				
+				Func_state_initial();
+				break;
+			
+			case state_up_inter: 
+			
+				Func_state_up_inter();
+				break;
+				
+			case state_down_inter:
+			
+				Func_state_down_inter();			
+				break;
+			
+			case state_up_aut:
+			
+				Func_state_up_auto();
+				break;
+			
+			case state_down_aut:
+
+				Func_state_down_auto();
+				break;
+			
+			case state_up_manual:
+				
+				Func_state_up_manual();
+				break;
+			
+			case state_down_manual:
+			
+				Func_state_down_manual();				
+				break;
+			
+			case state_antipinch:
+				
+				Func_state_antinpinch();
+				break;
+			
+			default:
+				break;
+
+		}
+}
+
+
+
+
+/**************************************************************
+ *  Name                 : Func_State_initial  
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_initial()
+{
+ 
+ Out_Leds(&rub_level);
+	
+	if(rub_Debounse_UP_Push==ENABLE)
 	{
+		rub_state=state_up_inter;
 		
 	}
 	
+	if(rub_Debounse_DOWN_Push==ENABLE)
+	{
+		rub_state=state_down_inter;
+	
+	}
+			
 }
+
+/**************************************************************
+ *  Name                 : Func_state_up_inter  
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_up_inter()
+{
+	if(UP_PUSH==ACTIVATED)
+	{
+		rul_count_gen++;
+	}
+	
+	if(UP_PUSH==DEACTIVATED && rul_count_gen<t_500ms)
+	{
+		rub_state=state_up_aut;
+		rub_level++;
+		Out_Leds(&rub_level);
+		rul_count_gen=0;
+	}
+	
+	if(UP_PUSH==ACTIVATED && rul_count_gen>t_500ms)
+	{
+		rub_state=state_up_manual;
+		rub_level++;
+		Out_Leds(&rub_level);
+		rul_count_gen=0;
+	}
+
+}
+
+
+/**************************************************************
+ *  Name                 : State_down_inter  
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_down_inter()
+{
+	if(DOWN_PUSH==ACTIVATED)
+		{
+			rul_count_gen++;
+		}
+		
+	if(DOWN_PUSH==DEACTIVATED && rul_count_gen<t_500ms)
+		{
+			rub_state=state_down_aut;
+			if(rub_level>LEVEL_MIN)
+			{
+				rub_level--;
+			}
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+		
+	if(DOWN_PUSH==ACTIVATED && rul_count_gen>t_500ms)
+		{
+			rub_state=state_down_manual;
+			if(rub_level>LEVEL_MIN)
+			{
+				rub_level--;
+			}
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+			
+			
+}
+
+/**************************************************************
+ *  Name                 : State_up_auto 
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_up_auto()
+{
+
+	if(rub_level<LEVEL_MAX)
+	{
+		ON_LED_UP;
+		rul_count_gen++;
+		
+
+		if(rul_count_gen>t_400ms)
+		{
+			
+			rub_level++;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+
+		
+	}
+		
+	else
+		{
+			rul_count_gen=0;
+			rub_state=state_initial;
+			OFF_LED_UP;
+		}
+		
+		
+}
+
+/**************************************************************
+ *  Name                 : State_down_auto  
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_down_auto()
+{
+
+	if(rub_level>LEVEL_MIN)
+	{
+		ON_LED_DOWN;
+		rul_count_gen++;
+		
+		if(rul_count_gen>t_400ms)
+		{
+			rub_level--;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+	}
+		
+	else
+	{
+		rul_count_gen=0;
+		rub_state=state_initial;
+		OFF_LED_DOWN;
+	}
+		
+
+}
+
+/**************************************************************
+ *  Name                 : State_up_manual
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_up_manual()
+{
+
+	if(rub_level<LEVEL_MAX)
+	{
+		ON_LED_UP;
+		rul_count_gen++;
+		
+		if(rul_count_gen>t_400ms)
+		{
+		
+			rub_level++;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+
+	}
+	else
+	{
+		OFF_LED_UP;
+	}
+		
+	
+	if(UP_PUSH==DEACTIVATED)
+	{
+		rub_state=state_initial;
+		OFF_LED_UP;
+	}
+	
+	
+	
+}
+
+/**************************************************************
+ *  Name                 : State_state_down_manual
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_down_manual()
+{
+
+	if(rub_level>LEVEL_MIN)
+	{
+		ON_LED_DOWN;
+		rul_count_gen++;
+		
+		if(rul_count_gen>t_400ms)
+		{
+			rub_level--;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+
+	}
+	else
+	{
+		OFF_LED_DOWN;
+	}
+		
+	
+	if(DOWN_PUSH==DEACTIVATED)
+	{
+		rub_state=state_initial;
+		OFF_LED_DOWN;
+	}
+	
+
+}
+
+/**************************************************************
+ *  Name                 : State_antipinch
+ *  Description          : 
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :	void
+ *  Critical/explanation :    [No]
+ **************************************************************/
+
+void Func_state_antinpinch()
+{
+	OFF_LED_UP;
+
+	if(rub_level>LEVEL_MIN)
+	{
+		
+		ON_LED_DOWN;
+		rul_count_gen++;
+
+		if(rul_count_gen>t_400ms)
+		{
+			rub_level--;
+			Out_Leds(&rub_level);
+			rul_count_gen=0;
+		}
+	}
+		
+	else
+		{
+			rul_count_gen++;
+			if(rul_count_gen>t_5000ms)
+			{
+				rul_count_gen=0;
+				rub_state=state_initial;
+				OFF_LED_DOWN;
+			}
+		
+		
+		}
+}
+	
+	
+	
+/* Exported functions */
+/* ------------------ */
 
 /**************************************************************
  *  Name                 : Func_500us
@@ -120,60 +493,15 @@ void delay_ms(vuint32_t time_ms)
  **************************************************************/
  
  
-void Func_500us(void)
+void WL_Func_2ms(void)
 {
-	static T_UBYTE lub_count_cycle1ms=0;
-	static T_UBYTE lub_count_antipinch=0;
 
-	lub_count_cycle1ms++;
-	
-	if(lub_count_cycle1ms>1)
+	if(	rub_Debounse_ANTIPINCH==ENABLE && (rub_state==state_up_aut || rub_state==state_up_manual))
 	{
-		lub_count_cycle1ms=0;
-		State_Machine_1ms();
-		
+		rub_state=state_antipinch;
 	}
-	
-	
-	if(ANTIPINCH==ACTIVATED && (rub_state==state_up_aut || rub_state==state_up_manual))
-	{
-		lub_count_antipinch++;
-		if(lub_count_antipinch>t_10ms_antipinch)
-		{
-			lub_count_antipinch=0;
-			rub_state=state_antipinch;
-				
-		}
 		
-	}
+	State_Machine_2ms();
 	
 }
-
- 
-
-
-
-/* Exported functions */
-/* ------------------ */
-/**************************************************************
- *  Name                 :	export_func
- *  Description          :
- *  Parameters           :  [Input, Output, Input / output]
- *  Return               :
- *  Critical/explanation :    [yes / No]
- **************************************************************/
-
-
-	
-	
-	
-
-
-
-
-
-
-
-
-
 

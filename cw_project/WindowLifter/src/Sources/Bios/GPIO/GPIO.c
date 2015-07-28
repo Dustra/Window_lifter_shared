@@ -21,7 +21,7 @@
 /** Own headers */
 /* GPIO routines prototypes */ 
 #include "GPIO.h"
-#include "LEDS.h"
+#include "LEDS_HANDLER.h"
 
 /** Used modules */
 

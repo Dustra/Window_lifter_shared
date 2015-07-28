@@ -41,8 +41,6 @@
 #define INPUT_ON					0
 #define INPUT_OFF					1
 
-#define DEACTIVATED					1
-#define	ACTIVATED					0
 
 /*-- Macros ------------------------------------------------------------------*/
 /* Indicator LEDs handling */

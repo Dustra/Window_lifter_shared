@@ -30,7 +30,7 @@
 /* -------- */
 
 #include "typedefs.h"
-#include "APP.h"
+
 
 
 /*==================================================*/ 
@@ -51,6 +51,10 @@
 /*======================================================*/ 
 /* BYTES */
 
+extern T_UBYTE rub_Debounse_UP_Push;
+extern T_UBYTE rub_Debounse_DOWN_Push;
+extern T_UBYTE rub_Debounse_ANTIPINCH;
+
 
 /* WORDS */
 
@@ -66,6 +70,7 @@
 /* ---------------------------------------- */
 
 extern void PUSH_Init(void);
+extern void Debounse_PUSH_1ms(void);
 
 /* Functions prototypes */
 
@@ -79,11 +84,17 @@ extern void PUSH_Init(void);
 #define PUSH3						66
 #define PUSH4						67
 
+#define DEACTIVATED					1
+#define	ACTIVATED					0
+
+#define	ENABLE						1
+#define DISABLE						0
+
 /* Functions macros */
 
 /* Exported defines */
 
-
+#define t_10ms_debounse 	10
 
 
 

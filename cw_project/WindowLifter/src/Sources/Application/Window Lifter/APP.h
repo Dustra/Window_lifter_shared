@@ -21,6 +21,15 @@
 /*  1.0      | 02/07/2015  | SAR/SIF/SCN_xxx               | Erick Salinas    */
 /* Integration under Continuus CM                                             */
 /*============================================================================*/
+/*  1.1      | 09/07/2015  |                               | Erick Salinas    */
+/* Integration with SCHEDULER MODULE                                          */
+/*============================================================================*/
+/*  1.2      | 14/07/2015  |                               | Erick Salinas    */
+/*  Separation for better reading of State Machine                            */
+/*============================================================================*/
+/*  1.3      | 26/07/2015  |                               | Erick Salinas    */
+/* Add of debounce function		                                              */
+/*============================================================================*/
 
 
 #ifndef _APP_H        /*prevent duplicated includes*/
@@ -30,7 +39,7 @@
 /* -------- */
 
 #include "typedefs.h"
-#include "LEDS.h"
+
 
 /*Exported types and constants*/
 /*----------------------------*/
@@ -65,18 +74,11 @@
 /*======================================================*/ 
 /* BYTES */
 
-extern T_UBYTE rub_level;
-extern T_UBYTE rub_state;
-extern T_UBYTE rub_flag_1ms;
-
 
 /* WORDS */
 
 
 /* LONGS and STRUCTURES */
-
-extern T_ULONG rul_count_gen;
-
 
 
 /*======================================================*/ 
@@ -89,12 +91,24 @@ extern T_ULONG rul_count_gen;
 
 /* Functions prototypes */
 
-extern void Func_500us(void);
+extern void WL_Func_2ms(void);
 
 
 /* Functions macros */
 
 /* Exported defines */
+
+#define 	ON_LED_UP		LED_ON(RA14)
+#define 	OFF_LED_UP		LED_OFF(RA14)
+
+#define 	ON_LED_DOWN		LED_ON(RA15)
+#define 	OFF_LED_DOWN	LED_OFF(RA15)
+
+#define		t_10ms				5
+#define		t_500ms				245
+#define		t_400ms				200
+#define		t_5000ms			2500
+#define 	t_10ms_antipinch	5
 
 
 
@@ -111,15 +125,6 @@ enum N_STATES
 		state_antipinch			
 		
 };
-
-#define 	ON_LED_UP		LED_ON(RA14)
-#define 	OFF_LED_UP		LED_OFF(RA14)
-
-#define 	ON_LED_DOWN		LED_ON(RA15)
-#define 	OFF_LED_DOWN	LED_OFF(RA15)
-
-
-
 
 
 enum N_LEVELS
@@ -140,11 +145,6 @@ enum N_LEVELS
 
 
 
-#define		t_10ms			10
-#define		t_500ms			500
-#define		t_400ms			400
-#define		t_5000ms		5000
-#define 	t_10ms_antipinch	10
 
 
 
